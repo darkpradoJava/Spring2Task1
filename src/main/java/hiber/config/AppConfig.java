@@ -13,7 +13,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
@@ -22,16 +21,20 @@ import java.util.Properties;
 @ComponentScan(value = "hiber")
 public class AppConfig {
 
+    private final Environment env;
+
     @Autowired
-    private Environment env;
+    public AppConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("db.driver")));
-        dataSource.setUrl("db.url");
-        dataSource.setUsername("db.username");
-        dataSource.setPassword("db.password");
+        dataSource.setDriverClassName(env.getRequiredProperty("db.driver"));
+        dataSource.setUrl(env.getRequiredProperty(("db.url")));
+        dataSource.setUsername(env.getRequiredProperty(("db.username")));
+        dataSource.setPassword(env.getRequiredProperty(("db.password")));
         return dataSource;
     }
 
