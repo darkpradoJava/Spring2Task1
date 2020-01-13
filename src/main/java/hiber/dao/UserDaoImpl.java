@@ -25,4 +25,11 @@ public class UserDaoImpl implements UserDao {
         TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
         return query.getResultList();
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public User getUserByCar(String model, String series) {
+        TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from Car ");
+        return query.getSingleResult();
+    }
 }

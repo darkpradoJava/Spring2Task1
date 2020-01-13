@@ -1,5 +1,6 @@
 package hiber.config;
 
+import hiber.model.Car;
 import hiber.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +50,7 @@ public class AppConfig {
         props.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
 
         sessionFactoryBean.setHibernateProperties(props);
-        sessionFactoryBean.setAnnotatedClasses(User.class);
+        sessionFactoryBean.setAnnotatedClasses(User.class, Car.class);
         return sessionFactoryBean;
     }
 
